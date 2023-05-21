@@ -1,11 +1,14 @@
+import pandas as pd
 import streamlit as st
-from src.extraction import load_data
-import src.answers as asw
 
-st.set_page_config(layout='wide')
+import src.answers as asw
+from src.extraction import load_data
+
+st.set_page_config(layout="wide")
+
 
 def create_dataframe_section(df):
-    st.title("Database Section")
+    st.title("Sections - Database Description")
 
     col_1, col_2 = st.columns(2)
 
@@ -29,39 +32,61 @@ def create_dataframe_section(df):
                         | km_class | Classificação das motos conforme a quilometragem percorrida |
                         | km_per_year | Quantidade de Quilometros percorridos a cada ano |
                         | km_per_month | Quantidade de Quilometros percorridos por mês |
-                        | company | Fabricanete da Motocicleta |
+                        | company | Fabricante da Motocicleta |
     """
 
     col_2.markdown(data_description)
 
-    return None
-
 
 def create_answers_section(df):
     st.title("Main Questions Answers")
+
     st.header("First Round")
-    st.subheader("Are the bikes with a unique owner more expense on avarege than the other bikes?")
-    st.subheader("Are high kilometer bikes more expensive than bikes with lower kilometer?")
-    st.subheader("Are the bikes that have more owners also the bikes with more kilometers traveled on avarege?")
-    st.subheader("Are the company that has the most expensive bikes registered also the company with the most bikes registered?")
-    st.subheader("How many bikes are being sold are bikes from a unique owner?")
-    st.subheader("How many bikes are being sold by their owners and how many bikes are being sold by distributors?")
-    st.subheader("Which company has the most bikes registered?")
-    st.subheader("Which company has the most expensive bikes on avarege?")
-    st.subheader("Which bikes are good for buying?")
-    
-    return None
+    st.subheader(
+        "How many motorcycles are being sold by individual owners and how many motorcycles are being sold by distributors?"
+    )
+    asw.rd1_question_9(df)
+
+    st.subheader("How many motorcycles being sold have had a unique owner?")
+    asw.rd1_question_13(df)
+
+    st.subheader(
+        "Are motorcycles with high mileage more expensive than motorcycles with lower mileage?"
+    )
+    asw.rd1_question_14(df)
+
+    st.subheader(
+        "On average, are motorcycles with a single owner more expensive than other motorcycles?"
+    )
+    asw.rd2_question_1(df)
+
+    st.subheader(
+        "On average, do motorcycles with multiple owners also have higher mileage?"
+    )
+    asw.rd2_question_2(df)
+
+    st.subheader("Which company has the highest number of registered motorcycles?")
+    asw.rd2_question_7(df)
+
+    st.subheader("Which company has the highest average price for motorcycles?")
+    asw.rd3_question_2(df)
+
+    st.subheader(
+        "Is the company with the highest average price for registered motorcycles also the company with the highest number of registered motorcycles?"
+    )
+    asw.rd3_question_5(df)
+
+    st.subheader("Which motorcycles are recommended for purchasing?")
+    asw.rd3_question_7(df)
 
 
-def main():
-    df_raw = load_data()
+def create_main_layout():
+    df = load_data()
 
-    create_dataframe_section(df_raw)
-    
-    st.dataframe(df_raw) 
+    create_dataframe_section(df)
 
-    return None
+    create_answers_section(df)
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    create_main_layout()
